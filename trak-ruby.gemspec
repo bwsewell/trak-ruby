@@ -1,23 +1,22 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'trak/ruby/version'
+$:.unshift(File.join(File.dirname(__FILE__), 'lib'))
 
-Gem::Specification.new do |spec|
-  spec.name          = "trak-ruby"
-  spec.version       = Trak::Ruby::VERSION
-  spec.authors       = ["Brian Sewell"]
-  spec.email         = ["bwsewell@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
-  spec.license       = "MIT"
+Gem::Specification.new do |s|
+  s.name = %q{trak-ruby}
+  s.version = "0.0.0"
+  s.authors = ["Brian Sewell"]
+  s.email = ["bwsewell@gmail.com"]
+  s.description = %q{trak.io helps you track the metrics that actually matter to your startup}
+  s.summary = %q{Ruby bindings for the trak.io API}
+  s.homepage = %q{http://docs.trak.io/}
+  s.license = "MIT"
+  s.default_executable = %q{trak}
 
-  spec.files         = `git ls-files`.split($/)
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths = ["lib"]
+  s.files = `git ls-files`.split($/)
+  s.executables = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  s.test_files = s.files.grep(%r{^(test|spec|features)/})
+  s.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.3"
-  spec.add_development_dependency "rake"
+  s.add_development_dependency "bundler", "~> 1.3"
+  s.add_development_dependency "rake"
 end

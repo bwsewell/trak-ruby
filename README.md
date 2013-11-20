@@ -133,6 +133,26 @@ Trak.annotate('Deployed update')
 Trak.annotate('Deployed update', {:channel => 'Web site'})
 ```
 
+### Distinct ID
+
+```ruby
+# Returns the current distinct id
+Trak.distinct_id
+
+# Sets the current distinct_id
+Trak.distinct_id = 1
+```
+
+### Channel
+
+```ruby
+# Returns the current channel
+Trak.channel
+
+# Sets the current channel
+Trak.channel = 'Web site'
+```
+
 ===
 
 ## Contributing

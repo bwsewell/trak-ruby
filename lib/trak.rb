@@ -5,7 +5,7 @@ module Trak
   @api_base = 'api.trak.io'
   @http = Net::HTTP.new @api_base
 
-  VERSION = '0.0.0'
+  VERSION = '0.0.1'
   HEADERS = { 'Content-Type' => 'application/json' }
 
   class << self

@@ -50,8 +50,7 @@ The `identify` method will set the class variable `@distinct_id` to whatever you
 ### Alias
 
 ```ruby
-t = Trak.new
-t.alias(distinct_id, aliases)
+Trak.alias(distinct_id, aliases)
 ```
 
 Alias is how you set additional distinct ids for a person. This is useful if you initially use trak.io's automatically generated distinct id to identify or track a person but then they login or register and you want to identify them by their email address or your application's id for them. Doing this will allow you to identify users across sessions and devices. But of course you want to tie their activity before and after they logged in together, Trak.alias() will do this for you.

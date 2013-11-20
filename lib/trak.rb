@@ -3,7 +3,7 @@ require 'json'
 
 class Trak
 
-  VERSION = '0.0.1'
+  VERSION = '0.0.2'
   HEADERS = { 'Content-Type' => 'application/json' }
 
   attr_accessor :distinct_id, :channel

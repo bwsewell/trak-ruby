@@ -3,7 +3,7 @@ $:.unshift(File.join(File.dirname(__FILE__), 'lib'))
 
 Gem::Specification.new do |s|
   s.name = %q{trak-ruby}
-  s.version = '0.0.1'
+  s.version = '0.0.2'
   s.authors = ["Brian Sewell"]
   s.email = ["bwsewell@gmail.com"]
   s.description = %q{trak.io helps you track the metrics that actually matter to your startup}

@@ -2,7 +2,7 @@
 $:.unshift(File.join(File.dirname(__FILE__), 'lib'))
 
 Gem::Specification.new do |s|
-  s.name = %q{trakio}
+  s.name = %q{trak-ruby}
   s.version = "0.0.0"
   s.authors = ["Brian Sewell"]
   s.email = ["bwsewell@gmail.com"]

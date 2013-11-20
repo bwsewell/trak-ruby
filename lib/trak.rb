@@ -3,6 +3,7 @@ require 'json'
 
 module Trak
   @api_base = 'api.trak.io'
+  @http = Net::HTTP.new @api_base
 
   VERSION = '0.0.0'
   HEADERS = { 'Content-Type' => 'application/json' }
@@ -10,10 +11,6 @@ module Trak
   class << self
 
     attr_accessor :api_key, :api_base, :distinct_id, :channel
-
-    def initialize
-      @http = Net::HTTP.new @api_base
-    end
 
     def execute_request(url, data)
       response = @http.post(url, data, HEADERS)
@@ -77,9 +74,7 @@ module Trak
     # you might record properties like revenue, size, etc.
     #
     # @param event [String] The key for this event, this value will be standardized server side.
-    # @param distinct_id [String] The distinct id of the person you wish to register this event against. When ommited the current session's distinct id is used.
-    # @param channel [String] The channel this event occurred in. When ommitted the current session's channel is used.
-    # @param properties [Hash] A set of key value properties that describe the event.
+    # @param opts [Hash] options to pass to track call (distinct_id [String], channel [String], properties [Hash])
     # @return [Object]
     #
     def track(event, opts = {})
@@ -102,7 +97,45 @@ module Trak
         },
       }.to_json
 
-      # Set current session variable for distinct_id, channel
+      # Set current session variable for distinct_id
+      self.distinct_id = opts[:distinct_id]
+
+      execute_request('/v1/track', data)
+    end
+
+    # Page view is just a wrapper for: Trak.track('Page view')
+    #
+    # @param url [String] The key for this event, this value will be standardized server side.
+    # @param page_title [String] The distinct id of the person you wish to register this event against. When ommited the current session's distinct id is used.
+    # @param opts [Hash] options to pass to track call (distinct_id [String], channel [String])
+    # @return [Object]
+    #
+    def page_view(url, page_title, opts = {})
+      defaults = {
+        :event => 'Page view',
+        :distinct_id => self.distinct_id,
+        :channel => self.channel,
+        :properties => {
+          :url => url,
+          :page_title => page_title,
+        },
+      }
+      opts = defaults.merge opts
+      raise "url" unless url
+      raise "page_title" unless page_title
+      raise "properties must be a Hash" unless defaults[:properties].kind_of?(Hash)
+      raise "No distinct_id is set.  Use 'identify' or 'alias' to set current session distinct_id" if opts[:distinct_id].nil?
+      data = {
+        :token => @api_key,
+        :data => {
+          :distinct_id => opts[:distinct_id],
+          :event => opts[:event],
+          :channel => opts[:channel],
+          :properties => opts[:properties],
+        },
+      }.to_json
+
+      # Set current session variable for distinct_id
       self.distinct_id = opts[:distinct_id]
 
       execute_request('/v1/track', data)
@@ -113,8 +146,7 @@ module Trak
     # any one person.
     #
     # @param event [String] The key for this annotation, this value will be standardized server side.
-    # @param properties [Hash] A set of key value properties about the event for example if the event was an update you might include details about what was deployed or what version the system is now at.
-    # @param channel [String] The channel this event occurred in.
+    # @param opts [Hash] options to pass to annotate call (channel [String], properties [Hash])
     # @return [Object]
     #
     def annotate(event, opts = {})

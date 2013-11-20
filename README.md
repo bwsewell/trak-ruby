@@ -13,7 +13,7 @@ Add this line to your application's Gemfile:
 Create an initilizer `config/initializers/trak.rb` with the following code:
 
 ```ruby
-Trak.api_key = "YOUR API KEY HERE"
+Trak::API_KEY = "YOUR API KEY HERE"
 ```
 
 And then execute:
@@ -39,7 +39,10 @@ Identify is how you send trak.io properties about a person like Email, Name, Acc
 Learn more about implementation of `identify` on trak.io's [API documentation](http://docs.trak.io/identify.html)
 
 ```ruby
-Trak.identify(1, {:name => 'John Smith', :email => 'john@test.com'})
+# Initilaize Trak object
+t = Trak.new
+
+t.identify(1, {:name => 'John Smith', :email => 'john@test.com'})
 ```
 
 The `identify` method will set the class variable `@distinct_id` to whatever you pass as your first parameter.
@@ -47,7 +50,8 @@ The `identify` method will set the class variable `@distinct_id` to whatever you
 ### Alias
 
 ```ruby
-Track.alias(distinct_id, aliases)
+t = Trak.new
+t.alias(distinct_id, aliases)
 ```
 
 Alias is how you set additional distinct ids for a person. This is useful if you initially use trak.io's automatically generated distinct id to identify or track a person but then they login or register and you want to identify them by their email address or your application's id for them. Doing this will allow you to identify users across sessions and devices. But of course you want to tie their activity before and after they logged in together, Trak.alias() will do this for you.
@@ -55,11 +59,14 @@ Alias is how you set additional distinct ids for a person. This is useful if you
 Learn more about implementation of `alias` on trak.io's [API documentation](http://docs.trak.io/alias.html)
 
 ```ruby
+# Initilaize Trak object
+t = Trak.new
+
 # Pass a string to add a new alias for a person with distinct_id = 1
-Trak.alias(1, 'Johnny')
+t.alias(1, 'Johnny')
 
 # Pass an array of aliases for a person with distinct_id = 1
-Trak.alias(1, ['Johnny', 'john'])
+t.alias(1, ['Johnny', 'john'])
 ```
 
 The `alias` method will set the class variable `@distinct_id` to whatever you pass as your first parameter.
@@ -75,19 +82,22 @@ Track is how you record the actions people perform. You can also record properti
 Learn more about implementation of `track` on trak.io's [API documentation](http://docs.trak.io/track.html)
 
 ```ruby
+# Initilaize Trak object
+t = Trak.new
+
 # Log the event 'played video'
-Trak.track('played video')
+t.track('played video')
 
 # Log the event 'played video' for a person with distinct_id = 1
-Trak.track('played video', {:distinct_id => 1})
+t.track('played video', {:distinct_id => 1})
 
 # Log the event 'played video' on the 'Blog' channel
-Trak.track('played video', {:channel => 'Blog'})
+t.track('played video', {:channel => 'Blog'})
 
 # Log an event with custom properties attached:
 # Log the event 'search' on the 'Web site' channel along with
 # any related properties you wish to track
-Trak.track('search', {
+t.track('search', {
   :channel => 'Web site',
   :properties => {
     :search_term => 'iPad Air',
@@ -109,8 +119,11 @@ Page view is just a wrapper for: `Trak.track('Page View')`
 Learn more about implementation of `page_view` on trak.io's [API documentation](http://docs.trak.io/page_view.html)
 
 ```ruby
+# Initilaize Trak object
+t = Trak.new
+
 # Log a user visiting the settings page
-Trak.page_view('http://mysite.com/settings', 'Settings')
+t.page_view('http://mysite.com/settings', 'Settings')
 ```
 
 The `page_view` method will set the class variable `@distinct_id` if you pass it a distinct_id in the `opts` hash.
@@ -126,31 +139,40 @@ Annotate is a way of recording system wide events that affect everyone. Annotati
 Learn more about implementation of `annotate` on trak.io's [API documentation](http://docs.trak.io/annotate.html)
 
 ```ruby
+# Initilaize Trak object
+t = Trak.new
+
 # Annotate a deploy
-Trak.annotate('Deployed update')
+t.annotate('Deployed update')
 
 # Annotate a deploy for a specific channel
-Trak.annotate('Deployed update', {:channel => 'Web site'})
+t.annotate('Deployed update', {:channel => 'Web site'})
 ```
 
 ### Distinct ID
 
 ```ruby
+# Initilaize Trak object
+t = Trak.new
+
 # Returns the current distinct id
-Trak.distinct_id
+t.distinct_id
 
 # Sets the current distinct_id
-Trak.distinct_id = 1
+t.distinct_id = 1
 ```
 
 ### Channel
 
 ```ruby
+# Initilaize Trak object
+t = Trak.new
+
 # Returns the current channel
-Trak.channel
+t.channel
 
 # Sets the current channel
-Trak.channel = 'Web site'
+t.channel = 'Web site'
 ```
 
 ===

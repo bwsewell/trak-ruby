@@ -67,7 +67,7 @@ The `alias` method will set the class variable `@distinct_id` to whatever you pa
 ### Track
 
 ```ruby
-Trak.trak(event, opts = {})
+Trak.track(event, opts = {})
 ```
 
 Track is how you record the actions people perform. You can also record properties specific to those actions. For a "Purchased shirt" event, you might record properties like revenue, size, etc.

@@ -113,7 +113,7 @@ class Trak
   # @param opts [Hash] options to pass to track call (distinct_id [String], channel [String])
   # @return [Object]
   #
-  def page_view(url, page_title, opts = {})
+  def page_view(url, page_title = nil, opts = {})
     defaults = {
       :event => 'Page view',
       :distinct_id => self.distinct_id,
@@ -124,8 +124,7 @@ class Trak
       },
     }
     opts = defaults.merge opts
-    raise "url" unless url
-    raise "page_title" unless page_title
+    raise "url is required" unless url
     raise "properties must be a Hash" unless defaults[:properties].kind_of?(Hash)
     raise "No distinct_id is set." if opts[:distinct_id].nil?
     data = {

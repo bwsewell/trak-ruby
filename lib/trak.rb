@@ -3,7 +3,7 @@ require 'json'
 
 class Trak
 
-  VERSION = '0.0.3'
+  VERSION = '0.0.4'
   HEADERS = { 'Content-Type' => 'application/json' }
 
   attr_accessor :distinct_id, :channel
@@ -28,7 +28,7 @@ class Trak
   #
   def identify(distinct_id, properties = {})
     raise "distinct_id required" unless distinct_id
-    raise "properties must be a Hash" unless aliases.kind_of?(Hash)
+    raise "properties must be a Hash" unless properties.kind_of?(Hash)
     data = {
       :token => @api_key,
       :data => {
@@ -89,7 +89,7 @@ class Trak
     opts = defaults.merge opts
     raise "event is required" unless event
     raise "properties must be a Hash" unless defaults[:properties].kind_of?(Hash)
-    raise "No distinct_id is set.  Use 'identify' or 'alias' to set current session distinct_id" if opts[:distinct_id].nil?
+    raise "No distinct_id is set." if opts[:distinct_id].nil?
     data = {
       :token => @api_key,
       :data => {
@@ -127,7 +127,7 @@ class Trak
     raise "url" unless url
     raise "page_title" unless page_title
     raise "properties must be a Hash" unless defaults[:properties].kind_of?(Hash)
-    raise "No distinct_id is set.  Use 'identify' or 'alias' to set current session distinct_id" if opts[:distinct_id].nil?
+    raise "No distinct_id is set." if opts[:distinct_id].nil?
     data = {
       :token => @api_key,
       :data => {

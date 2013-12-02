@@ -110,7 +110,7 @@ The `track` method will set the class variable `@distinct_id` if you pass it a d
 ### Page View
 
 ```ruby
-Trak.page_view(url, page_title, opts = {})
+Trak.page_view(url, page_title = nil, opts = {})
 ```
 
 Page view is just a wrapper for: `Trak.track('Page View')`

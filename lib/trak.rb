@@ -3,7 +3,7 @@ require 'json'
 
 class Trak
 
-  VERSION = '0.0.5'
+  VERSION = '0.0.6'
   HEADERS = { 'Content-Type' => 'application/json' }
 
   attr_accessor :distinct_id, :channel
@@ -16,8 +16,12 @@ class Trak
   end
 
   def execute_request(url, data)
-    response = @http.post(url, data, HEADERS)
-    JSON.parse(response.body)
+    unless defined?(SILENCE) && SILENCE
+      response = @http.post(url, data, HEADERS)
+      JSON.parse(response.body)
+    end
+  rescue
+    # Do something to handle errors
   end
 
   # Identify is how you send trak.io properties about a person like Email, Name, Account Type, Age, etc.
